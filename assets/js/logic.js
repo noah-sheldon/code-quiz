@@ -5,14 +5,16 @@ let startScreen = document.querySelector("#start-screen");
 let questionsScreen = document.querySelector("#questions");
 let questionTitle = document.querySelector("#question-title");
 let choices = document.querySelector("#choices");
-let timer = document.querySelector("#time");
+let timerID = document.querySelector("#time");
+let timerClass = document.querySelector(".time");
 let feedbackScreen = document.querySelector("#feedback");
 let endScreen = document.querySelector("#end-screen");
 let playerNameInput = document.querySelector("#initials");
 let submitBtn = document.querySelector("#submit");
 let questionNumber = 0;
-let time = 60;
+let time = 75;
 let playerScore = 0;
+let scores = getScores();
 
 startButton.addEventListener("click", function () {
   startQuiz();
@@ -48,9 +50,10 @@ function getQuestions() {
     event.preventDefault();
     var playerName = playerNameInput.value.trim();
     if (playerName === "") {
+      alert("Please enter your name!");
       return;
     } else {
-      sessionStorage.setItem(playerName, playerScore);
+      sessionStorage.setItem(scores, scores.push({playerName,playerScore}));
     }
     playerName.value = "";
   });
@@ -58,11 +61,11 @@ function getQuestions() {
 
 function startTime() {
   var Countdown = setInterval(function () {
-    timer.textContent = time;
+    timerID.textContent = time;
     time--;
     if (time <= 0) {
       clearInterval(Countdown);
-      timer.textContent = 60;
+      timerID.textContent = 60;
       alert("You have run out of time!");
       endGame();
     }
@@ -91,6 +94,8 @@ function createQuestion(questionNumber) {
     for (let i = 0; i < 4; i++) {
       createChoices(currentQ.choices[i]);
     }
+  } else {
+    endGame();
   }
 }
 
@@ -98,4 +103,13 @@ function endGame() {
   questionsScreen.setAttribute("class", "hide");
   feedbackScreen.setAttribute("class", "hide");
   endScreen.setAttribute("class", "start");
+  timerClass.setAttribute("class", "hide");
+}
+
+function getScores() {
+  if ("scores" in sessionStorage) {
+    return JSON.parse(sessionStorage.getItem("scores"));
+  } else {
+    return [];
+  }
 }
