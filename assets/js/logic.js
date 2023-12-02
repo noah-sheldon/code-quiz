@@ -2,63 +2,81 @@ import { questions } from "./questions.js";
 
 let startButton = document.querySelector("#start");
 let startScreen = document.querySelector("#start-screen");
-let questionsScreen = document.querySelector('#questions');
+let questionsScreen = document.querySelector("#questions");
 let questionTitle = document.querySelector("#question-title");
 let choices = document.querySelector("#choices");
-let timer = document.querySelector('#time');
-let questionNumber = 0
+let timer = document.querySelector("#time");
+let feedbackScreen = document.querySelector("#feedback");
+let questionNumber = 0;
+let time = 60;
+let playerScore = 0;
 
 startButton.addEventListener("click", function () {
-
-    startQuiz();
-//   if (startButton) {
-//     startScreen.remove();
-//     for (let i = 0; i < questions.length; i++) {
-//       let q = questions[i];
-//       questionTitle.textContent = q["question"];
-//       createChoices(q);      
-//     }
-//   }
+  startQuiz();
 });
 
-// function getRandomQuestion() {
-//   let randNum = Math.floor(Math.random() * questions.length);
-//   return questions[randNum];
-// }
-
 function startQuiz() {
-    startScreen.setAttribute("class", "hide");
-    questionsScreen.setAttribute("class","start");
-    getQuestions();
-    startTimer ();
-//   let question = getRandomQuestion();
-//   console.log(question);
-
-//   document.getElementById("question-title").style.display = "block";
+  startScreen.setAttribute("class", "hide");
+  questionsScreen.setAttribute("class", "start");
+  startTime();
+  getQuestions();
 }
 
 function getQuestions() {
-    // Get the first question and display it on screen
-    let currentQ = questions[questionNumber];
+  createQuestion(questionNumber);
+  choices.addEventListener("click", function (event) {
+    event.preventDefault();
+    let selectedAnswer = event.target;
+    let answerBool =
+      selectedAnswer.textContent == questions[questionNumber].answer;
+    if (answerBool) {
+      showFeedback("Correct Answer!");
+      playerScore += 10;
+      questionNumber += 1;
+      createQuestion(questionNumber);
+    } else {
+      showFeedback("Wrong Answer!");
+      time -= 10;
+      questionNumber += 1;
+      createQuestion(questionNumber);
+    }
+  });
+}
+
+function startTime() {
+  var Countdown = setInterval(function () {
+    timer.textContent = time;
+    time--;
+    if (time <= 0) {
+      // clears countdown
+      clearInterval(Countdown);
+      timer.textContent = 60;
+      alert("You have run out of time!");
+    }
+  }, 1000);
+}
+
+function showFeedback(message) {
+  feedbackScreen.textContent = "";
+  feedbackScreen.setAttribute("class", "start");
+  let feedbackPara = document.createElement("h4");
+  feedbackPara.textContent = message;
+  feedbackScreen.appendChild(feedbackPara);
+}
+
+function createChoices(choice) {
+  let choiceBtn = document.createElement("button");
+  choiceBtn.textContent = choice;
+  choices.appendChild(choiceBtn);
+}
+
+function createQuestion(questionNumber) {
+  if (questionNumber <= questions.length) {
+    choices.textContent = "";
+    var currentQ = questions[questionNumber];
     questionTitle.textContent = currentQ.question;
-    for(let i=0;i<4;i++){
-        let choiceBtn = document.createElement('button')
-        choiceBtn.textContent = currentQ.choices[i];
-        choices.appendChild(choiceBtn);
+    for (let i = 0; i < 4; i++) {
+      createChoices(currentQ.choices[i]);
     }
+  }
 }
-
-function startTimer () {
-    var Countdown = setInterval (function () {
-        timer.textContent = seconds
-        seconds--;
-    if (seconds == 0) {
-        // clears countdown
-        clearInterval(Countdown); 
-        timer.textContent = 60
-        alert("You have run out of time!")
-    }
-    }, 1000) 
-    // runs at speed of 1 second
-}
-
