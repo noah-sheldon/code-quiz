@@ -11,10 +11,10 @@ let feedbackScreen = document.querySelector("#feedback");
 let endScreen = document.querySelector("#end-screen");
 let playerNameInput = document.querySelector("#initials");
 let submitBtn = document.querySelector("#submit");
+let finalScoreText = document.querySelector("#final-score");
 let questionNumber = 0;
 let time = 75;
 let playerScore = 0;
-let scores = getScores();
 
 startButton.addEventListener("click", function () {
   startQuiz();
@@ -53,9 +53,12 @@ function getQuestions() {
       alert("Please enter your name!");
       return;
     } else {
-      sessionStorage.setItem(scores, scores.push({playerName,playerScore}));
+      let scores = getScores();
+      scores.push({ name: playerName, score: playerScore });
+      sessionStorage.setItem("scores", JSON.stringify(scores));
+      location.href = "highscores.html";
     }
-    playerName.value = "";
+    playerName = "";
   });
 }
 
@@ -103,7 +106,8 @@ function endGame() {
   questionsScreen.setAttribute("class", "hide");
   feedbackScreen.setAttribute("class", "hide");
   endScreen.setAttribute("class", "start");
-  timerClass.setAttribute("class", "hide");
+  timerID.textContent = 0;
+  finalScoreText.textContent = playerScore;
 }
 
 function getScores() {
