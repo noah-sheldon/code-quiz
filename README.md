@@ -41,6 +41,8 @@ The landing page for the application looks like the following on a standard HD s
 
 ![alt text](./assets/images/scr_3.png)
 
+![alt text](./assets/images/scr_7.png)
+
 ![alt text](./assets/images/scr_4.png)
 
 ![alt text](./assets/images/scr_5.png)
