@@ -35,12 +35,12 @@ function getQuestions() {
     let answerBool =
       selectedAnswer.textContent === questions[questionNumber].answer;
     if (answerBool) {
-      showFeedback("Correct Answer!");
+      showFeedback("Correct Answer!", "green");
       playerScore += 10;
       questionNumber += 1;
       createQuestion(questionNumber);
     } else {
-      showFeedback("Wrong Answer!");
+      showFeedback("Wrong Answer!", "red");
       time -= 10;
       questionNumber += 1;
       createQuestion(questionNumber);
@@ -75,11 +75,12 @@ function startTime() {
   }, 1000);
 }
 
-function showFeedback(message) {
+function showFeedback(message, colour) {
   feedbackScreen.textContent = "";
   feedbackScreen.setAttribute("class", "start");
   let feedbackPara = document.createElement("h4");
   feedbackPara.textContent = message;
+  feedbackPara.style.backgroundColor = colour;
   feedbackScreen.appendChild(feedbackPara);
 }
 
