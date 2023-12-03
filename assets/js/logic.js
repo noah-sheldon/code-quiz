@@ -13,7 +13,7 @@ let playerNameInput = document.querySelector("#initials");
 let submitBtn = document.querySelector("#submit");
 let finalScoreText = document.querySelector("#final-score");
 let questionNumber = 0;
-let time = 75;
+let time = 60;
 let playerScore = 0;
 
 startButton.addEventListener("click", function () {
