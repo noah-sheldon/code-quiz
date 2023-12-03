@@ -67,10 +67,10 @@ function startTime() {
     timerID.textContent = time;
     time--;
     if (time <= 0) {
+      endGame();
       clearInterval(Countdown);
       timerID.textContent = 60;
       alert("You have run out of time!");
-      endGame();
     }
   }, 1000);
 }
