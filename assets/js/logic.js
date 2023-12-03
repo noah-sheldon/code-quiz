@@ -90,7 +90,7 @@ function createChoices(choice) {
 }
 
 function createQuestion(questionNumber) {
-  if (questionNumber <= questions.length) {
+  if (questionNumber < questions.length) {
     choices.textContent = "";
     var currentQ = questions[questionNumber];
     questionTitle.textContent = currentQ.question;
@@ -98,6 +98,7 @@ function createQuestion(questionNumber) {
       createChoices(currentQ.choices[i]);
     }
   } else {
+    questionTitle.textContent = '';
     endGame();
   }
 }
