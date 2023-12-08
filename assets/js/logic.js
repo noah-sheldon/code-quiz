@@ -55,7 +55,7 @@ function getQuestions() {
     } else {
       let scores = getScores();
       scores.push({ name: playerName, score: playerScore });
-      sessionStorage.setItem("scores", JSON.stringify(scores));
+      localStorage.setItem("scores", JSON.stringify(scores));
       location.href = "highscores.html";
     }
     playerName = "";
@@ -113,8 +113,8 @@ function endGame() {
 }
 
 function getScores() {
-  if ("scores" in sessionStorage) {
-    return JSON.parse(sessionStorage.getItem("scores"));
+  if ("scores" in localStorage) {
+    return JSON.parse(localStorage.getItem("scores"));
   } else {
     return [];
   }

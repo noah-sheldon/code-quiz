@@ -3,8 +3,8 @@ let noScores = document.querySelector("#no-scores");
 let clearScores = document.querySelector("#clear");
 
 function getScores() {
-  if ("scores" in sessionStorage) {
-    var highScores = JSON.parse(sessionStorage.getItem("scores"));
+  if ("scores" in localStorage) {
+    var highScores = JSON.parse(localStorage.getItem("scores"));
     highScores.sort((a, b) => b.score - a.score);
     for (let i = 0; i < highScores.length; i++) {
       console.log(highScores.sort());
@@ -24,7 +24,7 @@ getScores();
 
 clearScores.addEventListener("click", function (event) {
   event.preventDefault;
-  sessionStorage.removeItem("scores");
+  localStorage.removeItem("scores");
   scoresList.textContent = "";
   getScores();
 });
